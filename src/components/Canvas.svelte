@@ -1,29 +1,41 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   export let radius: number;
   export let hidden = false;
-  let points: SVGGElement;
 
-  // Not keeping point in memory for performance
+  let canvas: HTMLCanvasElement;
+  const colorSquare = '#f00';
+  const colorCircle = '#0ff';
+
+  onMount(() => {
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = colorSquare;
+    ctx.fillRect(0, 0, radius * 2, radius * 2);
+
+    ctx.fillStyle = colorCircle;
+    ctx.beginPath();
+    ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
+    ctx.fill();
+  });
+  
   export const addPoint = (x: number, y: number, inCircle: boolean) => {
-    const point = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'circle'
-    );
+    const ctx = canvas.getContext('2d');
 
-    point.setAttribute('cx', x.toString());
-    point.setAttribute('cy', y.toString());
-    point.setAttribute('r', '2');
-    point.classList.add('point');
-
-    points.appendChild(point);
+    ctx.fillStyle = inCircle ? colorSquare : colorCircle;
+    ctx.beginPath();
+    ctx.arc(x, y, 2, 0, 2 * Math.PI);
+    ctx.fill();
   };
 </script>
 
-<svg class="canvas" class:hidden viewBox="0 0 {radius * 2} {radius * 2}">
-  <rect class="square" x="0" y="0" width={radius * 2} height={radius * 2} />
-  <circle class="circle" cx={radius} cy={radius} r={radius} />
-  <g class="points" bind:this={points}></g>
-</svg>
+<canvas
+  width={radius * 2}
+  height={radius * 2}
+  class="canvas"
+  bind:this={canvas}
+/>
 
 <style>
   .canvas {
@@ -46,6 +58,10 @@
   }
 
   :global(.point) {
-    fill: rgba(0, 0, 0, 0.5);
+    fill: var(--color-circle);
+  }
+
+  :global(.point.in-circle) {
+    fill: var(--color-square);
   }
 </style>
