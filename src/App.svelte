@@ -3,11 +3,11 @@
   import Explanation from './components/Explanation.svelte';
   const width = 1000;
   const radius = width / 2;
+  let canvas: Canvas;
+  let hideCanvas = false;
 
   let autoplay = false;
   let autoplaySpeedSelection = 0;
-
-  let points: [number, number, boolean][] = [];
 
   let circlePoints = 0;
   let totalPoints = 0;
@@ -27,7 +27,7 @@
 
     const inCircle = isInCircle(x, y);
 
-    points = [...points, [x, y, inCircle]];
+    canvas.addPoint(x, y, inCircle);
 
     if (inCircle) circlePoints++;
     totalPoints++;
@@ -49,7 +49,7 @@
 </script>
 
 <main>
-  <Canvas {radius} {points} />
+  <Canvas {radius} hidden={hideCanvas} bind:this={canvas} />
 
   <div class="stats">
     <ul>
@@ -63,13 +63,24 @@
   <div class="controls">
     <div>
       <label>
+        <input type="checkbox" bind:checked={hideCanvas} /> Hide Visual
+      </label>
+    </div>
+    <div>
+      <label>
         <input type="checkbox" bind:checked={autoplay} /> Autoplay
       </label>
     </div>
     {#if autoplay}
       <div>
         <label for="autoplaySpeed">Autoplay Speed</label>
-        <input type="range" min="0" max="4" bind:value={autoplaySpeedSelection}> {autoplaySpeed}
+        <input
+          type="range"
+          min="0"
+          max="3"
+          bind:value={autoplaySpeedSelection}
+        />
+        {autoplaySpeed}
       </div>
     {:else}
       <button on:click={addPoint}>Add Point</button>
