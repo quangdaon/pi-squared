@@ -4,6 +4,9 @@
   const width = 1000;
   const radius = width / 2;
 
+  let autoplay = false;
+  let autoplaySpeedSelection = 0;
+
   let points: [number, number, boolean][] = [];
 
   let circlePoints = 0;
@@ -30,8 +33,19 @@
     totalPoints++;
   };
 
+  requestAnimationFrame(function loop() {
+    if (autoplay) {
+      for (let i = 0; i < autoplaySpeed; i++) {
+        addPoint();
+      }
+    }
+
+    requestAnimationFrame(loop);
+  });
+
   $: ratio = totalPoints ? circlePoints / totalPoints : 0;
   $: estimate = ratio * 4;
+  $: autoplaySpeed = 10 ** autoplaySpeedSelection;
 </script>
 
 <main>
@@ -39,15 +53,27 @@
 
   <div class="stats">
     <ul>
-      <li><b>Points inside Circle: {circlePoints}</b></li>
-      <li><b>Total Points: {totalPoints}</b></li>
-      <li><b>Ratio: {ratio}</b></li>
-      <li><b>Pi Estimate: {estimate}</b></li>
+      <li><b>Points inside Circle:</b> {circlePoints}</li>
+      <li><b>Total Points:</b> {totalPoints}</li>
+      <li><b>Ratio:</b> {ratio}</li>
+      <li><b>Pi Estimate:</b> {estimate}</li>
     </ul>
   </div>
 
   <div class="controls">
-    <button on:click={addPoint}>Add Point</button>
+    <div>
+      <label>
+        <input type="checkbox" bind:checked={autoplay} /> Autoplay
+      </label>
+    </div>
+    {#if autoplay}
+      <div>
+        <label for="autoplaySpeed">Autoplay Speed</label>
+        <input type="range" min="0" max="4" bind:value={autoplaySpeedSelection}> {autoplaySpeed}
+      </div>
+    {:else}
+      <button on:click={addPoint}>Add Point</button>
+    {/if}
     <Explanation />
   </div>
 </main>
