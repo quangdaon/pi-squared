@@ -7,7 +7,7 @@
   let hideCanvas = false;
 
   let autoplay = false;
-  let autoplaySpeedSelection = 0;
+  let autoplayRateSelection = 0;
 
   let circlePoints = 0;
   let totalPoints = 0;
@@ -35,7 +35,7 @@
 
   requestAnimationFrame(function loop() {
     if (autoplay) {
-      for (let i = 0; i < autoplaySpeed; i++) {
+      for (let i = 0; i < autoplayRate; i++) {
         addPoint();
       }
     }
@@ -45,7 +45,7 @@
 
   $: ratio = totalPoints ? circlePoints / totalPoints : 0;
   $: estimate = ratio * 4;
-  $: autoplaySpeed = 10 ** autoplaySpeedSelection;
+  $: autoplayRate = 10 ** autoplayRateSelection;
 </script>
 
 <main>
@@ -78,9 +78,9 @@
           type="range"
           min="0"
           max="4"
-          bind:value={autoplaySpeedSelection}
+          bind:value={autoplayRateSelection}
         />
-        {autoplaySpeed.toLocaleString()}
+        {autoplayRate.toLocaleString()}
       </div>
     {:else}
       <button on:click={addPoint}>Add Point</button>
