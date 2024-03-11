@@ -40,29 +40,11 @@
 
 <style>
   .canvas {
-    --color-square: #f00;
-    --color-circle: #0ff;
     display: block;
     width: 400px;
   }
 
   .canvas.hidden {
     display: none;
-  }
-
-  .square {
-    fill: var(--color-square);
-  }
-
-  .circle {
-    fill: var(--color-circle);
-  }
-
-  :global(.point) {
-    fill: var(--color-circle);
-  }
-
-  :global(.point.in-circle) {
-    fill: var(--color-square);
   }
 </style>
