@@ -34,6 +34,7 @@
   width={radius * 2}
   height={radius * 2}
   class="canvas"
+  class:hidden
   bind:this={canvas}
 />
 
