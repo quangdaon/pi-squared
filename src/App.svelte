@@ -53,8 +53,8 @@
 
   <div class="stats">
     <ul>
-      <li><b>Points inside Circle:</b> {circlePoints}</li>
-      <li><b>Total Points:</b> {totalPoints}</li>
+      <li><b>Points inside Circle:</b> {circlePoints.toLocaleString()}</li>
+      <li><b>Total Points:</b> {totalPoints.toLocaleString()}</li>
       <li><b>Ratio:</b> {ratio}</li>
       <li><b>Pi Estimate:</b> {estimate}</li>
     </ul>
@@ -77,10 +77,10 @@
         <input
           type="range"
           min="0"
-          max="3"
+          max="4"
           bind:value={autoplaySpeedSelection}
         />
-        {autoplaySpeed}
+        {autoplaySpeed.toLocaleString()}
       </div>
     {:else}
       <button on:click={addPoint}>Add Point</button>
