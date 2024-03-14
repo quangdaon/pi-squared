@@ -34,6 +34,8 @@
     value of π to be (x/y)*4.
   </p>
 
+  <p>Check out <a href="https://www.quangdao.com/blog/pi-day-2024">my blog post</a> for more information.</p>
+
   <form method="dialog">
     <button>Cool!</button>
   </form>
