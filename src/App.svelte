@@ -51,28 +51,28 @@
 <main>
   <Canvas {radius} hidden={hideCanvas} bind:this={canvas} />
 
-  <div class="stats">
-    <ul>
-      <li><b>Points inside Circle:</b> {circlePoints.toLocaleString()}</li>
-      <li><b>Total Points:</b> {totalPoints.toLocaleString()}</li>
-      <li><b>Ratio:</b> {ratio}</li>
-      <li><b>Pi Estimate:</b> {estimate}</li>
-    </ul>
-  </div>
+  <div class="info">
+    <div class="stats">
+      <ul>
+        <li><b>Points inside Circle:</b> {circlePoints.toLocaleString()}</li>
+        <li><b>Total Points:</b> {totalPoints.toLocaleString()}</li>
+        <li><b>Ratio:</b> {ratio.toFixed(8)}</li>
+        <li><b>Pi Estimate:</b> {estimate.toFixed(8)}</li>
+      </ul>
+    </div>
 
-  <div class="controls">
-    <div>
-      <label>
-        <input type="checkbox" bind:checked={hideCanvas} /> Hide Visual
-      </label>
-    </div>
-    <div>
-      <label>
-        <input type="checkbox" bind:checked={autoplay} /> Autoplay
-      </label>
-    </div>
-    {#if autoplay}
-      <div>
+    <div class="controls">
+      <div class="control">
+        <label>
+          <input type="checkbox" bind:checked={hideCanvas} /> Hide Visual
+        </label>
+      </div>
+      <div class="control">
+        <label>
+          <input type="checkbox" bind:checked={autoplay} /> Autoplay
+        </label>
+      </div>
+      <div class="control">
         <label for="autoplaySpeed">Autoplay Speed</label>
         <input
           type="range"
@@ -82,12 +82,52 @@
         />
         {autoplayRate.toLocaleString()}
       </div>
-    {:else}
-      <button on:click={addPoint}>Add Point</button>
-    {/if}
-    <Explanation />
+    </div>
+
+    <div class="actions">
+      <button disabled={autoplay} on:click={addPoint}>Add Point</button>
+      <Explanation />
+    </div>
   </div>
 </main>
 
 <style>
+  main {
+    align-items: center;
+  }
+
+  .info {
+    flex: 1 0 1;
+    padding: 1em;
+  }
+
+  .stats ul {
+    max-width: 100%;
+    padding-left: 0;
+    margin-left: 0;
+    list-style-position: inside;
+  }
+
+  .stats ul li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .actions {
+    margin-top: 1em;
+  }
+
+  @media only screen and (min-width: 600px) {
+    main {
+      --canvas-width: 40vw;
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 2em;
+      padding: 0 calc((100vh - var(--canvas-width)) / 2);
+    }
+  }
 </style>

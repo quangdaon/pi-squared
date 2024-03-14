@@ -41,6 +41,18 @@
 
 <style>
   dialog {
-    max-width: 42vw;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    border-color: #cbb9a8;
+  }
+
+  dialog p {
+    margin-top: 0;
+  }
+
+  @media only screen and (min-width: 600px) {
+    dialog {
+      max-width: 42vw;
+    }
   }
 </style>

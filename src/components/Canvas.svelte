@@ -5,8 +5,8 @@
   export let hidden = false;
 
   let canvas: HTMLCanvasElement;
-  const colorSquare = '#f00';
-  const colorCircle = '#0ff';
+  const colorSquare = '#cbb9a8';
+  const colorCircle = '#145c9e';
 
   onMount(() => {
     const ctx = canvas.getContext('2d');
@@ -19,7 +19,7 @@
     ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
     ctx.fill();
   });
-  
+
   export const addPoint = (x: number, y: number, inCircle: boolean) => {
     const ctx = canvas.getContext('2d');
 
@@ -41,10 +41,18 @@
 <style>
   .canvas {
     display: block;
-    width: 400px;
+    width: 100%;
   }
 
   .canvas.hidden {
     display: none;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .canvas {
+      display: block;
+      flex: 0 0 1;
+      width: var(--canvas-width);
+    }
   }
 </style>
